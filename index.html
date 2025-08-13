@@ -6,34 +6,35 @@
   <style>
     body {
       font-family: 'Arial', sans-serif;
-      background: #e0f7fa;
+      background: #111;        /* 黒背景 */
+      color: #fff;             /* 白文字 */
       margin: 0;
       padding: 0;
       text-align: center;
     }
     h1 {
       margin-top: 30px;
-      color: #0277bd;
+      color: #ffd54f;          /* アクセント:黄色 */
     }
     .scratch-frame {
       margin: 30px auto 0 auto;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.5);
       width: 485px;
-      background: #fff;
+      background: #222;        /* ダークグレー背景 */
       border-radius: 8px;
       padding: 8px 0;
-      border: 2px solid #0277bd;
+      border: 2px solid #ffd54f; /* 黄色枠 */
     }
     .note {
       margin-top: 18px;
       font-size: 15px;
-      color: #333;
+      color: #ccc;             /* 薄い白文字 */
     }
     #countdown {
       margin-top: 18px;
       font-size: 21px;
-      color: #00695c;
-      background: #fff8e1;
+      color: #fff;
+      background: #333;
       border: 1px solid #ffd54f;
       display: inline-block;
       padding: 10px 24px;
@@ -45,38 +46,33 @@
   <h1>大阪環状線運転シミュレーター（Scratch埋め込み）</h1>
   <div id="countdown"></div>
   <div class="scratch-frame">
-    <iframe src="https://scratch.mit.edu/projects/1202658278/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>
+    <iframe src="https://scratch.mit.edu/projects/1202658278/embed"
+            allowtransparency="true" width="485" height="402"
+            frameborder="0" scrolling="no" allowfullscreen></iframe>
   </div>
   <div class="note">
     <p>上の枠にScratchの大阪環状線運転シミュレーターが表示されます。<br>
       スタートボタンや操作はScratch上で実行してください。</p>
   </div>
-
   <script>
     // カウントダウン終了日時（日本時間: 2025年8月20日11時00分）
-    // JSTはUTC+9なので、UTCに直す
     const targetDateJST = new Date('2025-08-20T11:00:00+09:00');
     const countdownEl = document.getElementById('countdown');
-
     function updateCountdown() {
       const now = new Date();
       const nowJST = new Date(now.getTime() + (9 * 60 * 60 * 1000 - now.getTimezoneOffset() * 60 * 1000));
       const diff = targetDateJST - nowJST;
-
       if (diff <= 0) {
         countdownEl.style.display = 'none';
         return;
       }
-
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
-
       countdownEl.innerHTML =
         `公開まであと <b>${days}日 ${hours}時間 ${minutes}分 ${seconds}秒</b> です！`;
     }
-
     updateCountdown();
     setInterval(updateCountdown, 1000);
   </script>
